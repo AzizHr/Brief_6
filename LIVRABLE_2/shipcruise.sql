@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2022 at 02:02 PM
+-- Generation Time: Dec 23, 2022 at 03:23 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -33,9 +33,39 @@ CREATE TABLE `cruise` (
   `image` varchar(100) NOT NULL,
   `nights_number` int(11) NOT NULL,
   `starting_date` date NOT NULL,
-  `ship_id` int(11) NOT NULL,
+  `ship_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cruise`
+--
+
+INSERT INTO `cruise` (`id`, `price`, `image`, `nights_number`, `starting_date`, `ship_id`) VALUES
+(5, 100, '', 10, '2022-12-12', 1),
+(6, 300, '', 6, '2022-12-30', 2),
+(7, 250, '', 6, '2022-12-28', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cruise_port`
+--
+
+CREATE TABLE `cruise_port` (
+  `cruise_id` int(11) NOT NULL,
   `port_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cruise_port`
+--
+
+INSERT INTO `cruise_port` (`cruise_id`, `port_id`) VALUES
+(5, 16),
+(5, 17),
+(5, 18),
+(6, 17),
+(6, 19);
 
 -- --------------------------------------------------------
 
@@ -48,6 +78,18 @@ CREATE TABLE `port` (
   `name` varchar(40) NOT NULL,
   `country` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `port`
+--
+
+INSERT INTO `port` (`id`, `name`, `country`) VALUES
+(15, 'New York', 'New York'),
+(16, 'Coodly', 'Canada'),
+(17, 'Germo', 'Germany'),
+(18, 'Micco', 'Morocco'),
+(19, 'qwerty', 'qwerty'),
+(20, 'qwerty', 'qwerty');
 
 -- --------------------------------------------------------
 
@@ -76,6 +118,15 @@ CREATE TABLE `room` (
   `room_type_id` int(11) NOT NULL,
   `ship_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`id`, `room_number`, `room_type_id`, `ship_id`) VALUES
+(1, 10, 1, 1),
+(2, 11, 3, 2),
+(3, 15, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +163,15 @@ CREATE TABLE `ship` (
   `places_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `ship`
+--
+
+INSERT INTO `ship` (`id`, `name`, `rooms_number`, `places_number`) VALUES
+(1, 'ship1', 10, 4),
+(2, 'ship2', 20, 8),
+(3, 'ship3', 10, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -137,7 +197,13 @@ CREATE TABLE `u_ser` (
 --
 ALTER TABLE `cruise`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ship_id` (`ship_id`),
+  ADD KEY `ship_id` (`ship_id`);
+
+--
+-- Indexes for table `cruise_port`
+--
+ALTER TABLE `cruise_port`
+  ADD PRIMARY KEY (`cruise_id`,`port_id`),
   ADD KEY `port_id` (`port_id`);
 
 --
@@ -190,25 +256,25 @@ ALTER TABLE `u_ser`
 -- AUTO_INCREMENT for table `cruise`
 --
 ALTER TABLE `cruise`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `port`
 --
 ALTER TABLE `port`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `room_type`
@@ -220,7 +286,7 @@ ALTER TABLE `room_type`
 -- AUTO_INCREMENT for table `ship`
 --
 ALTER TABLE `ship`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `u_ser`
@@ -236,8 +302,14 @@ ALTER TABLE `u_ser`
 -- Constraints for table `cruise`
 --
 ALTER TABLE `cruise`
-  ADD CONSTRAINT `cruise_ibfk_1` FOREIGN KEY (`ship_id`) REFERENCES `ship` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cruise_ibfk_2` FOREIGN KEY (`port_id`) REFERENCES `port` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cruise_ibfk_1` FOREIGN KEY (`ship_id`) REFERENCES `ship` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cruise_port`
+--
+ALTER TABLE `cruise_port`
+  ADD CONSTRAINT `cruise_port_ibfk_1` FOREIGN KEY (`cruise_id`) REFERENCES `cruise` (`id`),
+  ADD CONSTRAINT `cruise_port_ibfk_2` FOREIGN KEY (`port_id`) REFERENCES `port` (`id`);
 
 --
 -- Constraints for table `reservation`
