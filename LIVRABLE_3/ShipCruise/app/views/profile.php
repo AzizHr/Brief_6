@@ -1,1 +1,0 @@
-<h1><?php echo $user['id'] ?></h1>
