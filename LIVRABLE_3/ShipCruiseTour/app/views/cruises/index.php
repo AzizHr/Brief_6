@@ -21,7 +21,7 @@
             <?php foreach ($data['cruises'] as $cruise) : ?>
                 <tr>
                     <td><?php echo $cruise['id'] ?></td>
-                    <td><img style="width: 80px; height:80px;" src="<?php echo URLROOT . 'img/' . $cruise['image'] ?>" alt=""></td>
+                    <td><img style="width: 80px; height:80px;" src="<?php echo URLROOT . 'uploads/' . $cruise['image'] ?>" alt=""></td>
                     <td><?php echo $cruise['price'] ?></td>
                     <td><?php echo $cruise['nights_number'] ?></td>
                     <td><?php echo $cruise['starting_date'] ?></td>
