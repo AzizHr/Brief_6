@@ -2,6 +2,7 @@
   class Pages extends Controller {
     public function __construct(){
     $this->cruiseModel = $this->model('Cruise');
+    $this->portModel = $this->model('Port');
     }
     
     public function index(){
@@ -13,9 +14,14 @@
     }
 
     public function cruises() {
+      if(!isset($_SESSION['user_id'])) {
+      redirect('users/login');
+      }
     $cruises = $this->cruiseModel->getCruises();
+    $ports = $this->portModel->getPorts();
     $data = [
-      'cruises' => $cruises
+      'cruises' => $cruises ,
+      'ports' => $ports
     ];
     $this->view('pages/cruises', $data);
     }

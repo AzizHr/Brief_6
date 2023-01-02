@@ -5,12 +5,15 @@ class Cruises extends Controller
     {
         $this->cruiseModel = $this->model('Cruise');
         $this->shipModel = $this->model('Ship');
+        $this->portModel = $this->model('Port');
     }
 
     public function index()
     {
         $cruises = $this->cruiseModel->getCruises();
-        $data['cruises'] = $cruises;
+        $data = [
+            'cruises' => $cruises 
+        ];
         $this->view('cruises/index', $data);
     }
     public function add()
@@ -183,6 +186,18 @@ class Cruises extends Controller
             redirect('cruises/index');
         } else {
             redirect('cruises/index');
+        }
+    }
+
+    public function filterCruiseByPort($portName) {
+        $portName = $_POST['port_name'];
+        if($this->cruiseModel->filterByPort($portName)) {
+            $cruises = $this->cruiseModel->filterByPort($portName);
+            $data = [
+                'cruises' => $cruises 
+            ];
+
+            $this->view('pages/cruises', $data);
         }
     }
 }

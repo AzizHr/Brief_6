@@ -253,7 +253,7 @@ class Users extends Controller
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_email'] = $user['email'];
     // $_SESSION['user_name'] = $user->first_name;
-    redirect('pages/index');
+    redirect('pages/cruises');
   }
 
   public function logout()

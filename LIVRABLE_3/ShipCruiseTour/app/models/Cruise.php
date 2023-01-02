@@ -95,4 +95,15 @@ class Cruise
             return false;
         }
     }
+
+    public function filterByPort($portName) {
+        $this->db->query('SELECT * FROM cruise WHERE starting_port IN (SELECT id FROM port WHERE name = :name)');
+        $this->db->bind(':name', $portName);
+        if($this->db->resultSet()) {
+          return $this->db->resultSet();
+        }
+        else {
+          return false;
+        }
+        }
 }
