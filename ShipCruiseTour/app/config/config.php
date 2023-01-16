@@ -8,7 +8,7 @@
   // App Root
   define('APPROOT', dirname(dirname(__FILE__)));
   // URL Root
-  define('URLROOT', 'http://localhost/ShipCruiseTour/');
+  define('URLROOT', 'http://localhost/brief_6/ShipCruiseTour/');
   // Site Name
   define('SITENAME', 'ShipCruiseTour');
   // App Version

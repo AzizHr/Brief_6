@@ -1,10 +1,15 @@
 <?php
 class Users extends Controller
 {
+
+  private $userModel;
+  private $reservationModel;
+  private $cruiseModel;
+
   public function __construct()
   {
     $this->userModel = $this->model('User');
-    $this->reservationeModel = $this->model('Reservation');
+    $this->reservationModel = $this->model('Reservation');
     $this->cruiseModel = $this->model('Cruise');
   }
 
@@ -17,68 +22,35 @@ class Users extends Controller
       // Sanitize POST data
       $_POST = filter_input_array(INPUT_POST, 513);
 
+      
+      $row = $this->cruiseModel->getPrice($_POST['cruise_id']);
 
-      // Init data
+      if($row) {
+        $price = $row['price'];
+      }else {
+        $price = 5;
+      }
+      
       $data = [
-        'reservation_date' => trim($_POST['reservation_date']),
-        'reservation_price' => $_POST['reservation_price'],
-        'cruise_id' => trim($_POST['cruise_id']),
+        'reservation_price' => $price ,
+        'cruise_id' => $_POST['cruise_id'],
         'room_id' => $_POST['room_id'],
-        'user_id' => '',
-        'reservation_date_err' => '',
-        // 'reservation_price_err' => '',
-        // 'cruise_id_err' => '',
-        // 'room_id_err' => ''
-
+        'user_id' => $_SESSION['user_id']
       ];
 
-      // move_uploaded_file($data['cruise_img'], URLROOT . 'img/');
 
-      // Validate Email
-      if (empty($data['reservation_date'])) {
-        $data['reservation_date_err'] = 'Pleae enter date';
-      }
-
-      // Validate Name
-      if (empty($data['reservation_price'])) {
-        $data['reservation_price_err'] = 'Pleae enter a price';
-      }
-
-      if (empty($data['cruise_id'])) {
-        $data['cruise_id'] = 'Pleae choose a cruise';
-      }
-
-      if (empty($data['room_id'])) {
-        $data['room_id_err'] = 'Pleae choose a room';
-      }
-
-      // Make sure errors are empty
-      if (empty($data['reservation_date'])) {
-
-        // Register User
-        if ($this->reservationeModel->addReservation($data)) {
-          redirect('pages/cruises');
-        } else {
-          die('Something went wrong');
-        }
+      if ($this->reservationModel->addReservation($data)) {
+        redirect('my_reservations/index');
       } else {
-        // Load view with errors
-        $this->view('users/reserve', $data);
+        die('Something went wrong');
       }
     } else {
       $roomTypes = $this->cruiseModel->getRoomTypes();
       $cruises = $this->cruiseModel->getCruises();
       $data = [
-        'reservation_date' => '',
-        'reservation_price' => '',
-        'cruise_id' => '',
-        'room_id' => '',
-        'user_id' => '',
-        'reservation_date_err' => '',
-        'roomTypes' => $roomTypes ,
+        'roomTypes' => $roomTypes,
         'cruises' => $cruises
       ];
-
       // Load view
       $this->view('users/reserve', $data);
     }
@@ -252,7 +224,7 @@ class Users extends Controller
   {
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_email'] = $user['email'];
-    // $_SESSION['user_name'] = $user->first_name;
+    $_SESSION['user_name'] = $user['first_name'];
     redirect('pages/cruises');
   }
 

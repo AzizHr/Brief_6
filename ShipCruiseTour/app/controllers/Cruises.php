@@ -170,6 +170,7 @@ class Cruises extends Controller
             $this->view('cruises/edit', $data);
         }
     }
+    
     public function get($id)
     {
         $cruise = $this->cruiseModel->getCruise($id);
@@ -195,31 +196,46 @@ class Cruises extends Controller
     public function filterCruiseByPort($portName) {
         if($this->cruiseModel->filterByPort($portName)) {
             $cruises = $this->cruiseModel->filterByPort($portName);
-            $data = [
-                'cruises' => $cruises 
-            ];
+            
+    $ports = $this->portModel->getPorts();
+    $ships = $this->shipModel->getShips();
+    $data = [
+      'cruises' => $cruises,
+      'ports' => $ports ,
+      'ships' => $ships
+    ];
 
             $this->view('pages/cruises', $data);
         }
     }
 
     public function filterCruiseByShip($shipName) {
-        if($this->cruiseModel->filterByPort($shipName)) {
-            $cruises = $this->cruiseModel->filterByPort($shipName);
-            $data = [
-                'cruises' => $cruises 
-            ];
+        if($this->cruiseModel->filterByShip($shipName)) {
+            $cruises = $this->cruiseModel->filterByShip($shipName);
+            
+    $ports = $this->portModel->getPorts();
+    $ships = $this->shipModel->getShips();
+    $data = [
+      'cruises' => $cruises,
+      'ports' => $ports ,
+      'ships' => $ships
+    ];
 
             $this->view('pages/cruises', $data);
         }
     }
 
     public function filterCruiseByMonth($month) {
-        if($this->cruiseModel->filterByPort($month)) {
-            $cruises = $this->cruiseModel->filterByPort($month);
-            $data = [
-                'cruises' => $cruises 
-            ];
+        if($this->cruiseModel->filterByMonth($month)) {
+            $cruises = $this->cruiseModel->filterByMonth($month);
+          
+    $ports = $this->portModel->getPorts();
+    $ships = $this->shipModel->getShips();
+    $data = [
+      'cruises' => $cruises,
+      'ports' => $ports ,
+      'ships' => $ships
+    ];
 
             $this->view('pages/cruises', $data);
         }

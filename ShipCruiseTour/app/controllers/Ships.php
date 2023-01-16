@@ -1,6 +1,7 @@
 <?php
 class Ships extends Controller
 {
+    private $shipModel;
     public function __construct()
     {
         $this->shipModel = $this->model('Ship');
