@@ -1,6 +1,9 @@
 <?php
 class Cruises extends Controller
 {
+    private $cruiseModel;
+    private $shipModel;
+    private $portModel;
     public function __construct()
     {
         $this->cruiseModel = $this->model('Cruise');
@@ -190,9 +193,30 @@ class Cruises extends Controller
     }
 
     public function filterCruiseByPort($portName) {
-        $portName = $_POST['port_name'];
         if($this->cruiseModel->filterByPort($portName)) {
             $cruises = $this->cruiseModel->filterByPort($portName);
+            $data = [
+                'cruises' => $cruises 
+            ];
+
+            $this->view('pages/cruises', $data);
+        }
+    }
+
+    public function filterCruiseByShip($shipName) {
+        if($this->cruiseModel->filterByPort($shipName)) {
+            $cruises = $this->cruiseModel->filterByPort($shipName);
+            $data = [
+                'cruises' => $cruises 
+            ];
+
+            $this->view('pages/cruises', $data);
+        }
+    }
+
+    public function filterCruiseByMonth($month) {
+        if($this->cruiseModel->filterByPort($month)) {
+            $cruises = $this->cruiseModel->filterByPort($month);
             $data = [
                 'cruises' => $cruises 
             ];

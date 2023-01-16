@@ -1,5 +1,9 @@
 <?php
   class Pages extends Controller {
+
+    private $cruiseModel;
+    private $portModel;
+    
     public function __construct(){
     $this->cruiseModel = $this->model('Cruise');
     $this->portModel = $this->model('Port');
