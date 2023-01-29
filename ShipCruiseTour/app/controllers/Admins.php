@@ -69,6 +69,9 @@ class Admins extends Controller
         $this->view('admin/auth', $data);
       }
     } else {
+      if (isset($_SESSION['admin_id'])) {
+        redirect('cruises/index');
+    }
       // Init data
       $data = [
         'email' => '',

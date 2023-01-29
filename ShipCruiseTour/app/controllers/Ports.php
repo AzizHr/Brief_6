@@ -9,6 +9,9 @@ class Ports extends Controller
 
     public function index()
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admins/auth');
+        }
         $ports = $this->portModel->getPorts();
         $data['ports'] = $ports;
         $this->view('ports/index', $data);

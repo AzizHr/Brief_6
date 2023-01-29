@@ -5,6 +5,11 @@
             <h2>Add A Cruise</h2>
             <p>Please fill out this form to add a cruise</p>
             <form action="<?php echo URLROOT; ?>cruises/add" method="post" enctype="multipart/form-data">
+            <div class="form-group mt-3">
+                    <label for="name">Cruise Name: <sup>*</sup></label>
+                    <input type="text" name="name" class="form-control form-control-lg <?php echo (!empty($data['name_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['name']; ?>">
+                    <span class="invalid-feedback"><?php echo $data['name_err']; ?></span>
+                </div>
                 <div class="form-group mt-3">
                     <label for="price">Cruise Price: <sup>*</sup></label>
                     <input type="number" name="price" class="form-control form-control-lg <?php echo (!empty($data['price_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['price']; ?>" min="1">
@@ -25,6 +30,11 @@
                     <input type="date" name="starting_date" class="form-control form-control-lg <?php echo (!empty($data['starting_date_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['starting_date']; ?>">
                     <span class="invalid-feedback"><?php echo $data['starting_date_err']; ?></span>
                 </div>
+                <select class="form-select mt-3" aria-label="Default select example" name="starting_port">
+                    <?php foreach ($data['ports'] as $port) : ?>
+                        <option value="<?php echo $port['id'] ?>" selected><?php echo $port['name'] ?></option>
+                    <?php endforeach ?>
+                </select>
                 <select class="form-select mt-3" aria-label="Default select example" name="ship_id">
                     <?php foreach ($data['ships'] as $ship) : ?>
                         <option value="<?php echo $ship['id'] ?>" selected><?php echo $ship['name'] ?></option>

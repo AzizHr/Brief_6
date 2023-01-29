@@ -13,9 +13,14 @@ class Cruises extends Controller
 
     public function index()
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admins/auth');
+        }
+
         $cruises = $this->cruiseModel->getCruises();
+
         $data = [
-            'cruises' => $cruises 
+            'cruises' => $cruises
         ];
         $this->view('cruises/index', $data);
     }
@@ -28,28 +33,36 @@ class Cruises extends Controller
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, 513);
 
+            $ships = $this->shipModel->getShips();
+
             // Init data
             $data = [
+                'name' => trim($_POST['name']),
                 'price' => trim($_POST['price']),
                 'cruise_img' => $_FILES['cruise_img']['name'],
                 'nights_number' => trim($_POST['nights_number']),
                 'starting_date' => trim($_POST['starting_date']),
+                'starting_port' => trim($_POST['starting_port']),
                 'ship_id' => $_POST['ship_id'],
+                'name_err' => '',
                 'price_err' => '',
                 'cruise_img_err' => '',
                 'nights_number_err' => '',
-                'starting_date_err' => ''
+                'starting_date_err' => '',
+                'ships' => $ships
 
             ];
 
-            move_uploaded_file($_FILES['cruise_img']['tmp_name'] , 'uploads/'.$data['cruise_img']);
+            move_uploaded_file($_FILES['cruise_img']['tmp_name'], 'uploads/' . $data['cruise_img']);
 
-            // Validate Email
+            if (empty($data['name'])) {
+                $data['name_err'] = 'Pleae enter a name';
+            }
+
             if (empty($data['price'])) {
                 $data['price_err'] = 'Pleae enter a price';
             }
 
-            // Validate Name
             if (empty($data['cruise_img'])) {
                 $data['cruise_img_err'] = 'Pleae pick an image';
             }
@@ -63,9 +76,8 @@ class Cruises extends Controller
             }
 
             // Make sure errors are empty
-            if (empty($data['price_err']) && empty($data['image_err']) && empty($data['nights_number_err']) && empty($data['starting_date_err'])) {
+            if (empty($data['name_err']) && empty($data['price_err']) && empty($data['image_err']) && empty($data['nights_number_err']) && empty($data['starting_date_err'])) {
 
-                // Register User
                 if ($this->cruiseModel->addCruise($data)) {
                     redirect('cruises/index');
                 } else {
@@ -78,16 +90,20 @@ class Cruises extends Controller
         } else {
             // Init data
             $ships = $this->shipModel->getShips();
+            $ports = $this->portModel->getPorts();
             $data = [
+                'name' => '',
                 'price' => '',
                 'cruise_img' => '',
                 'nights_number' => '',
                 'starting_date' => '',
+                'name_err' => '',
                 'price_err' => '',
                 'cruise_img_err' => '',
                 'nights_number_err' => '',
                 'starting_date_err' => '',
-                'ships' => $ships
+                'ships' => $ships,
+                'ports' => $ports
             ];
 
             // Load view
@@ -104,6 +120,8 @@ class Cruises extends Controller
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, 513);
 
+            $ships = $this->shipModel->getShips();
+
             // Init data
             $data = [
                 'price' => trim($_POST['price']),
@@ -114,11 +132,12 @@ class Cruises extends Controller
                 'price_err' => '',
                 'cruise_img_err' => '',
                 'nights_number_err' => '',
-                'starting_date_err' => ''
+                'starting_date_err' => '',
+                'ships' => $ships
 
             ];
 
-            // move_uploaded_file($data['cruise_img'], URLROOT . 'img/');
+            move_uploaded_file($_FILES['cruise_img']['tmp_name'], 'uploads/' . $data['cruise_img']);
 
             // Validate Email
             if (empty($data['price'])) {
@@ -170,7 +189,7 @@ class Cruises extends Controller
             $this->view('cruises/edit', $data);
         }
     }
-    
+
     public function get($id)
     {
         $cruise = $this->cruiseModel->getCruise($id);
@@ -193,49 +212,52 @@ class Cruises extends Controller
         }
     }
 
-    public function filterCruiseByPort($portName) {
-        if($this->cruiseModel->filterByPort($portName)) {
+    public function filterCruiseByPort($portName)
+    {
+        if ($this->cruiseModel->filterByPort($portName)) {
             $cruises = $this->cruiseModel->filterByPort($portName);
-            
-    $ports = $this->portModel->getPorts();
-    $ships = $this->shipModel->getShips();
-    $data = [
-      'cruises' => $cruises,
-      'ports' => $ports ,
-      'ships' => $ships
-    ];
+
+            $ports = $this->portModel->getPorts();
+            $ships = $this->shipModel->getShips();
+            $data = [
+                'cruises' => $cruises,
+                'ports' => $ports,
+                'ships' => $ships
+            ];
 
             $this->view('pages/cruises', $data);
         }
     }
 
-    public function filterCruiseByShip($shipName) {
-        if($this->cruiseModel->filterByShip($shipName)) {
+    public function filterCruiseByShip($shipName)
+    {
+        if ($this->cruiseModel->filterByShip($shipName)) {
             $cruises = $this->cruiseModel->filterByShip($shipName);
-            
-    $ports = $this->portModel->getPorts();
-    $ships = $this->shipModel->getShips();
-    $data = [
-      'cruises' => $cruises,
-      'ports' => $ports ,
-      'ships' => $ships
-    ];
+
+            $ports = $this->portModel->getPorts();
+            $ships = $this->shipModel->getShips();
+            $data = [
+                'cruises' => $cruises,
+                'ports' => $ports,
+                'ships' => $ships
+            ];
 
             $this->view('pages/cruises', $data);
         }
     }
 
-    public function filterCruiseByMonth($month) {
-        if($this->cruiseModel->filterByMonth($month)) {
+    public function filterCruiseByMonth($month)
+    {
+        if ($this->cruiseModel->filterByMonth($month)) {
             $cruises = $this->cruiseModel->filterByMonth($month);
-          
-    $ports = $this->portModel->getPorts();
-    $ships = $this->shipModel->getShips();
-    $data = [
-      'cruises' => $cruises,
-      'ports' => $ports ,
-      'ships' => $ships
-    ];
+
+            $ports = $this->portModel->getPorts();
+            $ships = $this->shipModel->getShips();
+            $data = [
+                'cruises' => $cruises,
+                'ports' => $ports,
+                'ships' => $ships
+            ];
 
             $this->view('pages/cruises', $data);
         }

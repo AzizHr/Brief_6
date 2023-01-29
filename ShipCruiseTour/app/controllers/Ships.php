@@ -9,6 +9,9 @@ class Ships extends Controller
 
     public function index()
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admins/auth');
+        }
         $ships = $this->shipModel->getShips();
         $data['ships'] = $ships;
         $this->view('ships/index', $data);

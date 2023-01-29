@@ -11,12 +11,14 @@ class Cruise
     // Add Cruise
     public function addCruise($data)
     {
-        $this->db->query('INSERT INTO cruise (price, image , nights_number, starting_date , ship_id) VALUES(:price, :image , :nights_number, :starting_date , :ship_id)');
+        $this->db->query('INSERT INTO cruise (name , price, image , nights_number, starting_date, starting_port , ship_id) VALUES(:name , :price, :image , :nights_number, :starting_date, :starting_port , :ship_id)');
         // Bind values
+        $this->db->bind(':name', $data['name']);
         $this->db->bind(':price', $data['price']);
         $this->db->bind(':image', $data['cruise_img']);
         $this->db->bind(':nights_number', $data['nights_number']);
         $this->db->bind(':starting_date', $data['starting_date']);
+        $this->db->bind(':starting_port', $data['starting_port']);
         $this->db->bind(':ship_id', $data['ship_id']);
 
         // Execute
@@ -30,7 +32,7 @@ class Cruise
     // Get All Cruises
     public function getCruises()
     {
-        $this->db->query('SELECT cruise.id , cruise.name , cruise.price , cruise.image , cruise.nights_number , cruise.starting_date , cruise.ship_id , ship.id as "shipId" , ship.name as "ship_name" from cruise inner join ship on cruise.ship_id = ship.id');
+        $this->db->query('SELECT cruise.id , cruise.name , cruise.price , cruise.image , cruise.nights_number , cruise.starting_date , cruise.ship_id , cruise.traji , ship.id as "shipId" , ship.name as "ship_name" , port.name as "starting_port" from cruise inner join ship on cruise.ship_id = ship.id inner join port on cruise.starting_port = port.id');
 
         $row = $this->db->resultSet();
 
@@ -97,17 +99,6 @@ class Cruise
         }
     }
 
-    public function getTraji($id) {
-        $this->db->query('SELECT p.name from port p inner join cruise_port cp on p.id = cp.port_id inner join cruise c on cp.cruise_id = c.id and c.id = :id');
-        $this->db->bind(':id', $id);
-
-        if ($this->db->resultSet()) {
-            return $this->db->resultSet();
-        } else {
-            return false;
-        }
-    }
-
 
     public function getPrice($id) {
         $this->db->query('SELECT * FROM cruise WHERE cruise.id = :id');
@@ -123,7 +114,7 @@ class Cruise
     }
     public function filterByPort($portName)
     {
-        $this->db->query('SELECT c.* from cruise c inner join cruise_port cp on cp.cruise_id = c.id inner join port p on p.id = cp.port_id and p.name = :name');
+        $this->db->query('SELECT cruise.id , cruise.name , cruise.price , cruise.image , cruise.nights_number , cruise.starting_date , cruise.ship_id , cruise.traji , port.name as "starting_port" from cruise inner join port on port.id = cruise.starting_port and port.name = :name');
         $this->db->bind(':name', $portName);
         if ($this->db->resultSet()) {
             return $this->db->resultSet();

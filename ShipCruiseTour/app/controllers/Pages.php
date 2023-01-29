@@ -20,7 +20,7 @@ class Pages extends Controller
 
   public function contact()
   {
-    $this->view('pages/about');
+    $this->view('pages/contact');
   }
 
   public function cruises()
