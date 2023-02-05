@@ -62,7 +62,7 @@
                         <a class="nav-link" href="<?php echo URLROOT ?>pages/cruises">Cruises</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URLROOT . 'my_reservations/index'?>">My Reservations</a>
+                        <a class="nav-link" href="<?php echo URLROOT . 'users/my_reservations'?>">My Reservations</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo URLROOT . 'users/reserve'?>">Reserve Now</a>
