@@ -153,21 +153,21 @@ class Reservation
         }
     }
 
-    public function cancelUserReservation($reservation_id) {
-        $this->db->query('DELETE FROM reservation WHERE cruise_id in (SELECT id FROM cruise WHERE DATEDIFF(starting_date , CURDATE()) > 2) AND id = :id');
-        $this->db->bind(':id', $reservation_id);
+    // public function cancelUserReservation($reservation_id) {
+    //     $this->db->query('DELETE FROM reservation WHERE cruise_id in (SELECT id FROM cruise WHERE DATEDIFF(starting_date , CURDATE()) > 2) AND id = :id');
+    //     $this->db->bind(':id', $reservation_id);
 
-        if($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     if($this->db->execute()) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    public function delete($reservation_id)
+    public function cancelUserReservation($reservation_id)
     {
-        $this->db->query('SELECT*  FROM reservation WHERE cruise_id in (SELECT id FROM cruise WHERE DATEDIFF(starting_date , CURDATE()) > 2) AND id = :id');
-        $this->db->bind(":res_id", $reservation_id);
+        $this->db->query('SELECT * FROM reservation WHERE cruise_id in (SELECT id FROM cruise WHERE DATEDIFF(starting_date , CURDATE()) > 2) AND id = :id');
+        $this->db->bind(":id", $reservation_id);
         $this->db->execute();
         if ($this->db->rowCount() === 0) {
             return false;
