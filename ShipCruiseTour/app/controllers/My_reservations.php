@@ -9,7 +9,7 @@ class My_reservations extends Controller
 
     public function index()
     {
-        $my_reservations = $this->reservationModel->getReservations($_SESSION['user_id']);
+        $my_reservations = $this->reservationModel->getUserReservations($_SESSION['user_id']);
         $data['my_reservations'] = $my_reservations;
         $this->view('users/my_reservations/index', $data);
     }

@@ -58,7 +58,7 @@ class Admins extends Controller
 
         if ($loggedInAdmin) {
           // Create Session
-          $this->createUserSession($loggedInAdmin);
+          $this->createAdminSession($loggedInAdmin);
         } else {
           $data['password_err'] = 'Password incorrect';
 
@@ -87,7 +87,7 @@ class Admins extends Controller
     }
   }
 
-  public function createUserSession($admin)
+  public function createAdminSession($admin)
   {
     $_SESSION['admin_id'] = $admin['id'];
     $_SESSION['admin_email'] = $admin['email'];

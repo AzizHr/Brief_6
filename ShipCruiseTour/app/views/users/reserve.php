@@ -13,7 +13,7 @@
 
         <select name="cruise_id" id="cruise_id" class="form-select mt-3" aria-label="Default select example" >
           <?php foreach ($data['cruises'] as $cruise) : ?>
-            <option value="<?php echo $cruise['id'] ?>" selected><?php echo $cruise['id'] . '  -  ' . $cruise['price'] . ' $' ?></option>
+            <option value="<?php echo $cruise['id'] ?>" selected><?php echo $cruise['name'] . '  -  ' . $cruise['price'] . ' $' ?></option>
           <?php endforeach ?>
         </select>
 
