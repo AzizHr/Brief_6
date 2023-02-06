@@ -11,7 +11,6 @@
     <h1 class="main_title">ShipCruise</h1>
     <p class="main-description">Browse Available Cruises Now</p>
 </div>
-<?php flash('canceled_danger'); ?>
 <div class="container mt-5">
     <div class="row mt-5 justify-content-center">
         <div class="col-4">
@@ -55,7 +54,7 @@
                         <h5 class="card-title"><?php echo $cruise['name'] ?></h5>
                         <b><?php echo $cruise['price'] . ' $' ?></b>
                         <p><?php echo $cruise['starting_port_name'] . ' , ' . $cruise['traji'] ?></p>
-                        <a href="<?php URLROOT . "users/get/" . $cruise['id'] ?>" class="card_btn">Book Now</a>
+                        <a href="<?php echo  URLROOT . "users/reserve/" . $cruise['id'] ?>" class="card_btn">Book Now</a>
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@
                 <th>Price</th>
                 <th>Nights Number</th>
                 <th>Starting Date</th>
+                <th>Starting Port</th>
                 <th>Ship</th>
                 <th>Operations</th>
             </tr>
@@ -25,6 +26,7 @@
                     <td><?php echo $cruise['price'] ?></td>
                     <td><?php echo $cruise['nights_number'] ?></td>
                     <td><?php echo $cruise['starting_date'] ?></td>
+                    <td><?php echo $cruise['starting_port_name'] ?></td>
                     <td><?php echo $cruise['ship_name'] ?></td>
                     <td>
                         <a href="<?php echo URLROOT . 'cruises/get/' . $cruise['id'] ?>" class="btn btn-sm btn-warning m-2"><i class="fa fa-edit"></i></a>

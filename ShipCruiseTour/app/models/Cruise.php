@@ -32,7 +32,7 @@ class Cruise
     // Get All Cruises
     public function getCruises()
     {
-        $this->db->query('SELECT cruise.* , port.name AS "starting_port_name" FROM cruise INNER JOIN port ON cruise.starting_port = port.id');
+        $this->db->query('SELECT cruise.* , port.name AS "starting_port_name" , ship.name AS "ship_name" FROM cruise INNER JOIN port ON cruise.starting_port = port.id INNER JOIN ship ON cruise.ship_id = ship.id');
 
         $row = $this->db->resultSet();
 

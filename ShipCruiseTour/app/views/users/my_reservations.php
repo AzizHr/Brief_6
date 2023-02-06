@@ -1,5 +1,5 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
-<?php flash('booked_success', 'Booked With Success'); ?>
+<?php flash('message'); ?>
 <div class="container mt-5">
     <h3>My Reservations</h3>
 </div>

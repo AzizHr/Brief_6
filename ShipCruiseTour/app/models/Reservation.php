@@ -54,7 +54,7 @@ class Reservation
         $this->db->query('SELECT * FROM ship WHERE id IN (SELECT ship_id FROM cruise WHERE id = :id)');
         $this->db->bind(':id', $cruise_id);
         $result = $this->db->single();
-        if ($result['number_of_rooms'] == $result['reserved_rooms']) {
+        if ($result['reserved_rooms'] == 40) {
             return true;
         } else {
             return false;

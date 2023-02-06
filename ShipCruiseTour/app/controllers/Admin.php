@@ -1,10 +1,10 @@
 <?php
-class Admins extends Controller
+class Admin extends Controller
 {
   private $adminModel;
   public function __construct()
   {
-    $this->adminModel = $this->model('Admin');
+    $this->adminModel = $this->model('AdminModel');
   }
 
   public function dashboard()
@@ -12,7 +12,7 @@ class Admins extends Controller
     if(!isset($_SESSION['admin_id'])) {
       redirect('admins/auth');
     }
-    $this->view('admin/dashboard');
+    $this->view('cruises/index');
   }
 
   public function auth()
@@ -54,7 +54,7 @@ class Admins extends Controller
       if (empty($data['email_err']) && empty($data['password_err'])) {
         // Validated
         // Check and set logged in user
-        $loggedInAdmin = $this->adminModel->login($data['email'], $data['password']);
+        $loggedInAdmin = $this->adminModel->auth($data['email'], $data['password']);
 
         if ($loggedInAdmin) {
           // Create Session
@@ -92,7 +92,7 @@ class Admins extends Controller
     $_SESSION['admin_id'] = $admin['id'];
     $_SESSION['admin_email'] = $admin['email'];
     $_SESSION['admin_name'] = $admin['first_name'];
-    redirect('admins/dashboard');
+    redirect('admin/dashboard');
   }
 
   public function logout()
@@ -101,7 +101,7 @@ class Admins extends Controller
     unset($_SESSION['admin_email']);
     unset($_SESSION['admin_name']);
     session_destroy();
-    redirect('admins/auth');
+    redirect('admin/auth');
   }
 
   public function isLoggedIn()

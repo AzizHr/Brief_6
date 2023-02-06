@@ -23,16 +23,17 @@ class Users extends Controller
     ];
     $this->view('users/my_reservations', $data);
   }
-  public function reserve()
+  public function reserve($cruise_id)
   {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-      $reservation_price = $this->reservationModel->getWholePrice($_POST['cruise_id'], $_POST['type_of_room']);
-
+      $reservation_price = $this->reservationModel->getWholePrice($cruise_id , $_POST['type_of_room']);
+      // var_dump($_POST['cruise_id']);
+      // exit;
       $data = [
         'price' => $reservation_price,
-        'cruise_id' => $_POST['cruise_id'],
+        'cruise_id' => $cruise_id ,
         'type_of_room' => $_POST['type_of_room'],
         'user_id' => $_SESSION['user_id']
       ];
@@ -54,37 +55,30 @@ class Users extends Controller
             $room_number = $this->reservationModel->getReservedRooms($target_ship_id);
             $room_data['number_of_room'] = $room_number;
             if ($this->reservationModel->createRoomAfterBooking($room_data)) {
-              flash('booked_success', 'Booked With Success');
+              flash('message', 'Booked With Success');
               redirect('users/my_reservations');
             }
           }
         } else {
-          echo json_encode(['error' => 'error booking!']);
+          flash('message', 'Error Booking!' , 'alert alert-danger');
+          redirect('users/my_reservations');
         }
       } else {
-        echo json_encode(['error' => 'This Ship is Full']);
+        flash('message', 'This Ship is Full' , 'alert alert-danger');
+        redirect('users/my_reservations');
       }
     } else {
-        $room_types = $this->cruiseModel->getRoomTypes();
-        $data = [
-            'room_types' => $room_types
-        ];
+      $cruise = $this->cruiseModel->getCruise($cruise_id);
+      $room_types = $this->cruiseModel->getRoomTypes();
+      $data = [
+        'room_types' => $room_types,
+        'cruise' => $cruise
+      ];
 
-        $this->view('users/reserve', $data);
+      $this->view('users/reserve', $data);
     }
   }
 
-  public function get($id)
-    {
-        $cruise = $this->cruiseModel->getCruise($id);
-        $room_types = $this->cruiseModel->getRoomTypes();
-        $data = [
-            'cruise' => $cruise,
-            'room_types' => $room_types
-        ];
-
-        $this->view('users/reserve', $data);
-    }
 
   public function cancel($reservation_id)
   {
@@ -92,13 +86,13 @@ class Users extends Controller
       if ($this->reservationModel->getShipIdBeforeDeletingUserReservation($reservation_id) != false) {
         $ship_id = $this->reservationModel->getShipIdBeforeDeletingUserReservation($reservation_id);
         if ($this->reservationModel->cancelUserReservation($reservation_id)) {
-          flash('canceled_success', 'Canceled With Success');
+          flash('message', 'Canceled With Success');
           redirect('users/my_reservations');
           if ($this->reservationModel->decreaseShip($ship_id)) {
             // echo json_encode(['success' => 'canceled!']);
           }
         } else {
-          flash('canceled_danger', 'Out of Date!', 'alert alert-danger');
+          flash('message', 'Out of Date!', 'alert alert-danger');
           redirect('users/my_reservations');
           // echo json_encode(['error' => 'out of date!']);
         }

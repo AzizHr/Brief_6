@@ -49,11 +49,11 @@
                         <a class="nav-link" href=""><?php echo $_SESSION['admin_name'] ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-outline-dark" href="<?php echo URLROOT ?>admins/logout">Logout</a>
+                        <a class="btn btn-outline-dark" href="<?php echo URLROOT ?>admin/logout">Logout</a>
                     </li>
                 </ul>
             <?php endif ?>
-            <?php if (isset($_SESSION['user_id'])) : ?>
+            <?php if (isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) : ?>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">Home</a>
@@ -63,9 +63,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo URLROOT . 'users/my_reservations'?>">My Reservations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URLROOT . 'users/reserve'?>">Reserve Now</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mx-auto d-flex gap-2">
