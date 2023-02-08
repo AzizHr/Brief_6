@@ -10,7 +10,7 @@ class Ships extends Controller
     public function index()
     {
         if (!isset($_SESSION['admin_id'])) {
-            redirect('admins/auth');
+            redirect('admin/auth');
         }
         $ships = $this->shipModel->getShips();
         $data['ships'] = $ships;
@@ -58,6 +58,7 @@ class Ships extends Controller
 
                 // Register User
                 if ($this->shipModel->addShip($data)) {
+                    flash('message', 'Added With Success');
                     redirect('ships/index');
                 } else {
                     die('Something went wrong');
@@ -118,6 +119,7 @@ class Ships extends Controller
 
 
                 if ($this->shipModel->editShip($id, $data)) {
+                    flash('message', 'Edited With Success');
                     redirect('ships/index');
                 } else {
                     die('Something went wrong');
@@ -154,8 +156,10 @@ class Ships extends Controller
     {
 
         if ($this->shipModel->deleteShip($id)) {
+            flash('message', 'Deleted With Success');
             redirect('ships/index');
         } else {
+            flash('message', 'Error');
             redirect('ships/index');
         }
     }

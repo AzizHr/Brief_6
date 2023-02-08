@@ -32,16 +32,16 @@
             <?php if (isset($_SESSION['admin_id'])) : ?>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="<?php echo URLROOT  . 'cruises/index' ?>">Cruises</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URLROOT ?>">Cruises</a>
+                        <a class="nav-link" href="<?php echo URLROOT  . 'ports/index' ?>">Ports</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URLROOT ?>">Contact</a>
+                        <a class="nav-link" href="<?php echo URLROOT . 'ships/index' ?>">Ships</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mx-auto d-flex gap-2">

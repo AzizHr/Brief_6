@@ -14,7 +14,7 @@ class Cruises extends Controller
     public function index()
     {
         if (!isset($_SESSION['admin_id'])) {
-            redirect('admins/auth');
+            redirect('admin/auth');
         }
 
         $cruises = $this->cruiseModel->getCruises();
@@ -79,6 +79,7 @@ class Cruises extends Controller
             if (empty($data['name_err']) && empty($data['price_err']) && empty($data['image_err']) && empty($data['nights_number_err']) && empty($data['starting_date_err'])) {
 
                 if ($this->cruiseModel->addCruise($data)) {
+                    flash('message', 'Added With Success');
                     redirect('cruises/index');
                 } else {
                     die('Something went wrong');
@@ -162,6 +163,7 @@ class Cruises extends Controller
 
 
                 if ($this->cruiseModel->editCruise($id, $data)) {
+                    flash('message', 'Edited With Success');
                     redirect('cruises/index');
                 } else {
                     die('Something went wrong');
@@ -206,8 +208,10 @@ class Cruises extends Controller
     {
 
         if ($this->cruiseModel->deleteCruise($id)) {
+            flash('message', 'Deleted With Success');
             redirect('cruises/index');
         } else {
+            flash('message', 'Something Wrong');
             redirect('cruises/index');
         }
     }

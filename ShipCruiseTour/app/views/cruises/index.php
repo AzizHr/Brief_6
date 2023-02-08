@@ -1,6 +1,6 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
+<?php flash('message') ?>
 <div class="container mt-5">
-<h4><?php echo isset($data['success']) ? $data['success'] : '' ?></h4>
 <a href="<?php echo URLROOT;  ?>cruises/add" class="btn btn-sm btn-success"><i class="fa fa-plus me-2"></i>Add New Cruise</a>
 </div>
 <div class="mx-auto text-center">

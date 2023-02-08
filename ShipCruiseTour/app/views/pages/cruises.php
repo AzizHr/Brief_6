@@ -30,7 +30,7 @@
                 <?php endforeach ?>
             </ul>
         </div>
-        
+
 
         <div class="col-4">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Month</button>
@@ -45,9 +45,9 @@
 </div>
 
 <div class="container mt-5">
-    <div class="row mt-5 gap-5 justify-content-center">
+    <div id="paginated-list" data-current-page="1" aria-live="polite" class="row mt-5 gap-5 justify-content-center">
         <?php foreach ($data['cruises'] as $cruise) : ?>
-            <div class="col-lg-3 col-md-5 col-sm-12">
+            <div class="li col-lg-3 col-md-5 col-sm-12">
                 <div class="card" style="width: 18rem; height: 460px;">
                     <img class="card-img-top" src="<?php echo URLROOT ?>img/card_img1.jpg" alt="Card image cap" style="height:60%;">
                     <div class="card-body">
@@ -60,5 +60,20 @@
             </div>
         <?php endforeach ?>
     </div>
+
+
 </div>
+<nav class="pagination-container d-flex">
+    <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">
+        &lt;
+    </button>
+
+    <div id="pagination-numbers">
+
+    </div>
+
+    <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page">
+        &gt;
+    </button>
+</nav>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

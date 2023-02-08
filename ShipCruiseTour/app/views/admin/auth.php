@@ -3,10 +3,10 @@
 <div class="container mt-5">
   <div class="row mt-5">
     <div class="col-md-6 mx-auto">
-      <?php flash('register_success'); ?>
+      <?php flash('error'); ?>
       <h2>Admin Authentification</h2>
       <p>Please fill in your credentials to log in</p>
-      <form action="<?php echo URLROOT; ?>admins/auth" method="POST">
+      <form action="<?php echo URLROOT; ?>admin/auth" method="POST">
         <div class="form-group mt-3">
           <label for="email">Email: <sup>*</sup></label>
           <input type="email" name="email" class="form-control form-control-lg <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['email']; ?>">

@@ -10,7 +10,7 @@ class Ports extends Controller
     public function index()
     {
         if (!isset($_SESSION['admin_id'])) {
-            redirect('admins/auth');
+            redirect('admin/auth');
         }
         $ports = $this->portModel->getPorts();
         $data['ports'] = $ports;
@@ -51,6 +51,7 @@ class Ports extends Controller
 
                 // Register User
                 if ($this->portModel->addPort($data)) {
+                    flash('message', 'Added With Success');
                     redirect('ports/index');
                 } else {
                     die('Something went wrong');
@@ -102,6 +103,7 @@ class Ports extends Controller
 
 
                 if ($this->portModel->editPort($id, $data)) {
+                    flash('message', 'Edited With Success');
                     redirect('ports/index');
                 } else {
                     die('Something went wrong');
@@ -138,6 +140,7 @@ class Ports extends Controller
     {
 
         if ($this->portModel->deletePort($id)) {
+            flash('message', 'Deleted With Success');
             redirect('ports/index');
         } else {
             redirect('ports/index');

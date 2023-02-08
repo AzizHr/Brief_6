@@ -69,7 +69,7 @@ class Ship
     // Delete One Ship
     public function deleteShip($id)
     {
-        $this->db->query('DELETE * FROM ship WHERE id = :id');
+        $this->db->query('DELETE FROM ship WHERE id = :id');
         $this->db->bind(':id', $id);
 
         if ($this->db->execute()) {

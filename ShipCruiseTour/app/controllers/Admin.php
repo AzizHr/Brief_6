@@ -2,17 +2,24 @@
 class Admin extends Controller
 {
   private $adminModel;
+  private $cruiseModel;
   public function __construct()
   {
     $this->adminModel = $this->model('AdminModel');
+    $this->cruiseModel = $this->model('Cruise');
   }
 
   public function dashboard()
   {
     if(!isset($_SESSION['admin_id'])) {
-      redirect('admins/auth');
+      redirect('admin/auth');
     }
-    $this->view('cruises/index');
+    $cruises = $this->cruiseModel->getCruises();
+
+        $data = [
+            'cruises' => $cruises
+        ];
+    $this->view('cruises/index' , $data);
   }
 
   public function auth()
@@ -41,28 +48,27 @@ class Admin extends Controller
         $data['password_err'] = 'Please enter password';
       }
 
-      // Check for user/email
+      // Check for admin/email
       if ($this->adminModel->findAdminByEmail($data['email'])) {
-        // User found
+        // Admin found
 
       } else {
-        // User not found
+        // Adminnot found
         $data['email_err'] = 'No admin found';
       }
 
       // Make sure errors are empty
       if (empty($data['email_err']) && empty($data['password_err'])) {
         // Validated
-        // Check and set logged in user
+        // Check and set logged in admin
         $loggedInAdmin = $this->adminModel->auth($data['email'], $data['password']);
 
         if ($loggedInAdmin) {
           // Create Session
           $this->createAdminSession($loggedInAdmin);
         } else {
-          $data['password_err'] = 'Password incorrect';
-
-          $this->view('admin/auth', $data);
+          flash('error', 'Email or Password incorrect');
+          redirect('admin/auth');
         }
       } else {
         // Load view with errors

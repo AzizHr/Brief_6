@@ -12,12 +12,12 @@
                 </div>
                 <div class="form-group mt-3">
                     <label for="rooms_number">Rooms Number: <sup>*</sup></label>
-                    <input type="number" name="rooms_number" class="form-control form-control-lg <?php echo (!empty($data['rooms_number_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ship']['rooms_number'] ; ?>">
+                    <input type="number" name="rooms_number" class="form-control form-control-lg <?php echo (!empty($data['rooms_number_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ship']['number_of_rooms'] ; ?>">
                     <span class="invalid-feedback"><?php echo $data['rooms_number_err']; ?></span>
                 </div>
                 <div class="form-group mt-3">
                     <label for="places_number">Places Number: <sup>*</sup></label>
-                    <input type="number" name="places_number" class="form-control form-control-lg <?php echo (!empty($data['places_number_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ship']['places_number'] ; ?>">
+                    <input type="number" name="places_number" class="form-control form-control-lg <?php echo (!empty($data['places_number_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ship']['reserved_rooms'] ; ?>">
                     <span class="invalid-feedback"><?php echo $data['places_number_err']; ?></span>
                 </div>
                 <div class="row mt-3">
