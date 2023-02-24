@@ -78,16 +78,11 @@ class Reservation
 
     public function getReservedRooms($ship_id)
     {
-        $this->db->query('SELECT  reserved_rooms AS "room_number" FROM ship WHERE id = :id');
+        $this->db->query('SELECT reserved_rooms FROM ship WHERE id = :id');
         $this->db->bind(':id', $ship_id);
 
         $result = $this->db->single();
-
-        if (empty($result['room_number']) || $result['room_number'] == 0) {
-            return false;
-        } else {
-            return $result['room_number'];
-        }
+        return $result['reserved_rooms'];
     }
 
 
@@ -192,6 +187,4 @@ class Reservation
             return $result['ship_id'];
         }
     }
-
-    
 }

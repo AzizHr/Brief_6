@@ -52,8 +52,11 @@ class Users extends Controller
       if (!$this->reservationModel->getShipCapacity($data['cruise_id'])) {
         if ($this->reservationModel->add($data)) {
           if ($this->reservationModel->increaseShip($data['cruise_id'])) {
-            $room_number = $this->reservationModel->getReservedRooms($target_ship_id);
-            $room_data['number_of_room'] = $room_number;
+            // $room_number = $this->reservationModel->getReservedRooms($target_ship_id);
+            // var_dump($room_number);
+            // die;
+            $i = 1;
+            $room_data['number_of_room'] = $i;
             if ($this->reservationModel->createRoomAfterBooking($room_data)) {
               flash('message', 'Booked With Success');
               redirect('users/my_reservations');
