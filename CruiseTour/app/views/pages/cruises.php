@@ -50,7 +50,7 @@
     <?php if (count($data['cruises']) > 0) : ?>
         <?php foreach ($data['cruises'] as $cruise) : ?>
             <li class="card col-lg-3 col-md-6" style="width: 18rem; padding: 0; height: 490px;">
-                <img src="<?= URLROOT . './img/img1.jpg' ?>" class="card-img-top" style="width: 100%;" alt="...">
+                <img src="<?php echo URLROOT . 'uploads/' . $cruise->image ?>" class="card-img-top" style="width: 100%; height: 60%;" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" style="margin-top: -30px; font-weight: bold;"><?= $cruise->title ?></h5>
                     <p class="card-text" style="margin-top: -20px;"><?= $cruise->starting_port_name . ' , ' . $cruise->itinerary ?></p>

@@ -20,7 +20,7 @@
                 <?php foreach ($data['cruises'] as $cruise) : ?>
                     <tr>
                         <td><?= $cruise->cruise_id ?></td>
-                        <td><?= $cruise->image ?></td>
+                        <td><img src="<?php echo URLROOT . 'uploads/' . $cruise->image ?>" class="card-img-top" style="width: 60px; height: 60px; border-radius: 4px;" alt="..."></td>
                         <td><?= $cruise->title ?></td>
                         <td><?= $cruise->cruise_price . ' $' ?></td>
                         <td><?= $cruise->itinerary ?></td>

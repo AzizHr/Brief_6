@@ -9,7 +9,7 @@
 
 <div class="container mt-5">
     <div class="row mt-5 gap-5 justify-content-center">
-        <div class="col-lg-3 col-md-5 col-sm-12">
+        <div class="col-lg-3 col-md-5 col-sm-12 d-grid justify-content-center">
             <div class="card" style="width: 18rem; height: 400px;">
                 <img class="card-img-top" src="<?php echo URLROOT ?>img/card_img1.jpg" alt="Card image cap" style="height:60%;">
                 <div class="card-body">
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-5 col-sm-12">
+        <div class="col-lg-3 col-md-5 col-sm-12 d-grid justify-content-center">
             <div class="card" style="width: 18rem; height: 400px;">
                 <img class="card-img-top" src="<?php echo URLROOT ?>img/card_img2.jpg" alt="Card image cap" style="height:60%;">
                 <div class="card-body">
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-5 col-sm-12">
+        <div class="col-lg-3 col-md-5 col-sm-12 d-grid justify-content-center">
             <div class="card" style="width: 18rem; height: 400px;">
                 <img class="card-img-top" src="<?php echo URLROOT ?>img/card_img3.jpg" alt="Card image cap" style="height:60%;">
                 <div class="card-body">
