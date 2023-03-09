@@ -39,6 +39,16 @@
                     <?php endforeach ?>
                 </select>
             </div>
+            <div class="mt-3 d-flex justify-content-between">
+                <div>
+                    <label>Choose ports for itinerary : </label>
+                    <select class="form-select mt-1" name="starting_port" id="ports">
+                        <?php foreach ($data['ports'] as $port) : ?>
+                            <option value="<?= $port->port_id ?>"><?= $port->port_name ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div> <input class="btn btn-sm btn-danger mt-4" type="submit" value="Add Port" id="add_port">
+            </div>
             <div class="form-group mt-2">
                 <label>Itinerary : </label>
                 <input class="form-control" type="text" name="itinerary" id="itinerary">
@@ -54,3 +64,4 @@
     </div>
 </div>
 <script src="<?php echo URLROOT; ?>js/cruise_validation_add.js"></script>
+<script src="<?php echo URLROOT; ?>js/add_port_to_itinerary.js"></script>

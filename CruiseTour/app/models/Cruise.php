@@ -11,7 +11,7 @@ class Cruise
   //Get All Cruises
   public function allCruises()
   {
-    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id');
+    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.starts_at >= CURDATE()');
     $cruises = $this->db->all();
     return $cruises;
   }
@@ -25,7 +25,7 @@ class Cruise
 
   public function filterByPort($port_id)
   {
-    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.starting_port = :port_id');
+    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.starts_at >= CURDATE() AND cruises.starting_port = :port_id');
     $this->db->bind(':port_id', $port_id);
     $cruises = $this->db->all();
     return $cruises;
@@ -33,16 +33,16 @@ class Cruise
 
   public function filterByShip($ship_id)
   {
-    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.ship_id = :ship_id');
+    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.starts_at >= CURDATE() AND cruises.ship_id = :ship_id');
     $this->db->bind(':ship_id', $ship_id);
     $cruises = $this->db->all();
     return $cruises;
   }
 
-  public function filterByDate($cruise_id)
+  public function filterByMonth($cruise_month)
   {
-    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.cruise_id = :cruise_id');
-    $this->db->bind(':cruise_id', $cruise_id);
+    $this->db->query('SELECT cruises.* , ports.port_name AS "starting_port_name" , ships.ship_name FROM cruises INNER JOIN ports ON cruises.starting_port = ports.port_id INNER JOIN ships ON cruises.ship_id = ships.ship_id AND cruises.starts_at >= CURDATE() AND MONTH(cruises.starts_at) = :cruise_month');
+    $this->db->bind(':cruise_month', $cruise_month);
     $cruises = $this->db->all();
     return $cruises;
   }

@@ -17,9 +17,6 @@ class Cruises extends Controller
 
     public function index()
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
         $data = [
             'cruises' => $this->cruise->allCruises(),
         ];
@@ -67,13 +64,13 @@ class Cruises extends Controller
         }
     }
 
-    public function filterByDate()
+    public function filterByMonth()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $cruise_id = $_POST['cruise_id'];
-            if ($this->cruise->filterByShip($cruise_id)) {
+            if ($this->cruise->filterByMonth($cruise_id)) {
                 $data = [
-                    'cruises' => $this->cruise->filterByDate($cruise_id),
+                    'cruises' => $this->cruise->filterByMonth($cruise_id),
                     'dates_ids' => $this->cruise->dates_ids(),
                     'ships' => $this->ship->allShips(),
                     'ports' => $this->port->allPorts()

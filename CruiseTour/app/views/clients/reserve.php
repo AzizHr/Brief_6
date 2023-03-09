@@ -5,7 +5,7 @@
             <label>Choose Room Type : </label>
             <select class="form-select" name="room_type">
                 <?php foreach ($data['room_types'] as $room_type) : ?>
-                    <option value="<?= $room_type->room_type_id ?>"><?= $room_type->room_type_name ?></option>
+                    <option value="<?= $room_type->room_type_id ?>"><?= $room_type->room_type_name . ' - ' . $room_type->price . ' $' ?></option>
                 <?php endforeach ?>
             </select>
         </div> <br>

@@ -33,12 +33,12 @@
         </div>
     </form>
 
-    <form class="col-md-3" action="<?= URLROOT . 'cruises/filterByDate' ?>" method="post">
+    <form class="col-md-3" action="<?= URLROOT . 'cruises/filterByMonth' ?>" method="post">
         <div class="d-flex gap-2">
             <select class="form-select" name="cruise_id">
-                <?php foreach ($data['dates_ids'] as $dates_id) : ?>
-                    <option value="<?= $dates_id->cruise_id ?>"><?= $dates_id->starts_at ?></option>
-                <?php endforeach ?>
+                <?php for($i = 1 ; $i <= 12 ; $i++) : ?>
+                    <option value="<?= $i ?>"><?= strlen($i) == 1 ? 0 . '' . $i : $i ?></option>
+                <?php endfor ?>
             </select>
 
             <input class="btn btn-warning" type="submit" value="Filter">
@@ -53,7 +53,7 @@
                 <img src="<?php echo URLROOT . 'uploads/' . $cruise->image ?>" class="card-img-top" style="width: 100%; height: 60%;" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" style="margin-top: -30px; font-weight: bold;"><?= $cruise->title ?></h5>
-                    <p class="card-text" style="margin-top: -20px;"><?= $cruise->starting_port_name . ' , ' . $cruise->itinerary ?></p>
+                    <p class="card-text" style="margin-top: -20px;"><?= $cruise->starting_port_name . ' , ' . $cruise->itinerary . ' ' ?><b><?= $cruise->cruise_price . ' $' ?></b></p>
                     <p class="card-text" style="margin-top: -24px;"><small><?= $cruise->starts_at ?></small></p>
                     <a style="margin-top: -20px;" href="<?= URLROOT . 'cruises/show_to_reserve/' . $cruise->cruise_id ?>" class="btn btn-primary">Book Now</a>
                 </div>
