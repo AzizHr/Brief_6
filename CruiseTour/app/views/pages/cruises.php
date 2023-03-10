@@ -53,7 +53,8 @@
                 <img src="<?php echo URLROOT . 'uploads/' . $cruise->image ?>" class="card-img-top" style="width: 100%; height: 60%;" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" style="margin-top: -30px; font-weight: bold;"><?= $cruise->title ?></h5>
-                    <p class="card-text" style="margin-top: -20px;"><?= $cruise->starting_port_name . ' , ' . $cruise->itinerary . ' ' ?><b><?= $cruise->cruise_price . ' $' ?></b></p>
+                    <p class="card-text" style="margin-top: -20px;"><?= $cruise->starting_port_name . ' , ' . $cruise->itinerary . ' ' ?></p>
+                    <b style="margin-top: -20px;"><?= $cruise->cruise_price . ' $' ?></b>
                     <p class="card-text" style="margin-top: -24px;"><small><?= $cruise->starts_at ?></small></p>
                     <a style="margin-top: -20px;" href="<?= URLROOT . 'cruises/show_to_reserve/' . $cruise->cruise_id ?>" class="btn btn-primary">Book Now</a>
                 </div>
