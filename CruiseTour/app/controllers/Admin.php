@@ -1,4 +1,5 @@
 <?php
+// This is a class called Admin
 class Admin extends Controller
 {
   private $user;
